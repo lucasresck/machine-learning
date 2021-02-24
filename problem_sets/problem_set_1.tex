@@ -24,12 +24,27 @@
 
     \noindent \textbf{\textit{Exercise 1.3}}
 
-    \noindent \textit{The weight update rule in (1.3)~\cite{yaser2012learning} has the nice interpretation that it moves in the direction of classifying $x(t)$ correctly.}
-    
+    \noindent \textit{The weight update rule in (1.3)~\cite{yaser2012learning} has the nice interpretation that it moves in the direction of classifying $\mathbf{x}(t)$ correctly.}    
     \begin{itemize}[before=\itshape]
         \item[(a)] Show that $y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t) < 0$. [Hint: $\mathbf{x}(t)$ is misclassified by $\mathbf{w}(t)$.]
         \item[(b)] Show that $y(t) \mathbf{w}^\intercal(t + 1) \mathbf{x}(t) > y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t)$. [Hint: Use (1.3)~\cite{yaser2012learning}.]
         \item[(c)] As far as classifying $\mathbf{x(t)}$ is concerned, argue that the move from $\mathbf{w}(t)$ to $\mathbf{w}(t + 1)$ is a move `in the right direction'.
+    \end{itemize}
+
+    \begin{itemize}
+        \item[(a)] Because $\mathbf{x}(t)$ is misclassified, $\mathbf{w}^\intercal(t) \mathbf{x}(t)$ has the opposite sign of $y(t)$.
+        \item[(b)] Note that, because $x_0 = 1$, we have $\mathbf{x}(t) \ne 0$.
+            So:
+            \begin{align*}
+                y(t) \mathbf{w}^\intercal(t + 1) \mathbf{x}(t) &= y(t) (\mathbf{w}(t) + y(t) \mathbf{x}(t))^\intercal \mathbf{x}(t) \\
+                &= y(t) (\mathbf{w}^\intercal(t) + y(t) \mathbf{x}^\intercal(t)) \mathbf{x}(t) \\
+                &= y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t) + [y(t)]^2 \mathbf{x}^\intercal(t) \mathbf{x}(t)  \\
+                &= y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t) + [y(t) \lVert\mathbf{x}\lVert]^2 \\
+                &> y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t)
+            \end{align*}
+        \item[(c)] We would like to have $y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t) > 0$, if the classification of $\mathbf{x}(t)$ was correct.
+            So we take a greater $y(t) \mathbf{w}^\intercal(t + 1) \mathbf{x}(t)$, with the hope that it will be positive.
+            If it is not the case, we can try again.
     \end{itemize}
         
 
