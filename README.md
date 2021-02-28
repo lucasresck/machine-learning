@@ -1,2 +1,2 @@
 # machine-learning
-Exercise and homework codes for Machine Learning (2021, FGV).
+Problem sets and implementations for Machine Learning (2021, FGV).
