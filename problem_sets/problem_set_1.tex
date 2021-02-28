@@ -19,6 +19,8 @@
 
 \graphicspath{{../images/}}
 
+\newcommand{\prob}{\mathbb{P}}
+
 \title{Problem set 1\\
     \large{Machine Learning}}
 \author{Lucas Emanuel Resck Domingues\\    
@@ -53,8 +55,10 @@
             \end{align*}
         \item[(c)] We would like to have $y(t) \mathbf{w}^\intercal(t) \mathbf{x}(t) > 0$, if the classification of $\mathbf{x}(t)$ was correct.
             So we take a greater $y(t) \mathbf{w}^\intercal(t + 1) \mathbf{x}(t)$, with the hope that it will be positive.
-            If it is not the case, we can try again. \\
+            If it is not the case, we can try again.
     \end{itemize}
+
+    \bigskip
 
     \noindent \textbf{\textit{Exercise 1.4}}
 
@@ -96,7 +100,24 @@
         \label{fig:pla}
     \end{figure}
 
-    \nocite{yaser2012learning}
+    \bigskip
+
+    \noindent \textbf{\textit{Exercise 1.8}}
+
+    \noindent \textit{If $\mu = 0.9$, what is the probability that a sample of 10 marbles will have $\nu \le 0.1$? [Hints: 1. Use binomial distribution. 2. The answer is a very small number.]} \\
+
+    Consider $X$ the number of red marbles.
+    Because every marble has the same probability of being red, this is a binomial distribution with parameters $n = N = 10$ and $p = \mu = 0.9$.
+    The probability calculation is as follows:
+
+    \begin{align*}
+        \prob(\nu \le 0.1) &= \prob\left(\frac{X}{10} \le 0.1\right) \\
+        &= \prob(X \le 1) \\
+        &= \prob(X = 0) + \prob(X = 1) \\
+        &= {10 \choose 0} \cdot 0.9^0 \cdot 0.1^{10} + {10 \choose 1} \cdot 0.9^1 \cdot 0.1^9 \\
+        &= 9.1 \cdot 10^{-9}
+    \end{align*}
+
     \bibliographystyle{plain}
     \bibliography{references}
 
