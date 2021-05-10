@@ -1,2 +1,4 @@
 # machine-learning
-Exercise and homework codes for Machine Learning (2021, FGV).
+
+Problem sets and implementations for [Machine Learning](https://emap.fgv.br/disciplina/graduacao/aprendizado-de-maquinas) (2021, FGV).
+Professor: [Rodrigo Targino](https://emap.fgv.br/corpo-docente/rodrigo-santos-targino).
