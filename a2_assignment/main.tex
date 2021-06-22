@@ -14,6 +14,7 @@
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{subfig}
 
 % Portuguese text
 \usepackage[utf8]{inputenc}
@@ -232,6 +233,45 @@
 
       \section{Results and discussion}
             \label{sec:results}
+
+            \subsection{Latent Dirichlet allocation}
+
+                  Latent Dirichlet allocation was adjusted in our documents using five topics (components), the number of precedents we are considering. \autoref{fig:lda_topics} shows the top-20 words for each topic. From the barplot, we can see the following topics associated with the following BPs, justified by the following words:
+                  \begin{itemize}
+                        \item topic 1 \& BP 20: gratificação, inativos, atividade, desempenho, avaliação, gdata;
+                        \item topic 3 \& BP 4: salário, base, decisão, mínimo, constituição, cálculo;
+                        \item topic 4 \& BP 10: decisão, tribunal, constitucional, 10;
+                        \item topic 5 \& BP 14: acesso, direito, penal, inquérito, defeso, 14.
+                  \end{itemize}
+
+                  \begin{figure*}[!h]
+                        \includegraphics[width=\linewidth]{lda_topics.png}
+                        \caption{Top-20 words for each topic estimated with latent Dirichlet analysis.}
+                        \label{fig:lda_topics}
+                  \end{figure*}
+
+                  We can see if the ``predicted'' topics match the real BPs being cited. Using this topic to BP assignment presented before, we get an accuracy of 0.76. That is, this topic modeling predicts the cited precedent correctly in 76\% of documents. We would expect 0.2 if it were a random assignment. So, LDA can extract the subjects of the BPs being cited.
+
+            \subsection{Truncated SVD dimensionality reduction}
+
+                  \autoref{fig:svd_1} shows the resulting truncated SVD dimensionality reduction to 2. The color indicates the cited precedents, but the algorithm does not know that. We can see a pattern of data distribution, indicating that, in fact, documents that cite the same BP are near each other.
+
+                  \begin{figure}[!h]
+                        \includegraphics[width=\linewidth]{svd_1.png}
+                        \caption{Truncated singular value decomposition (SVD) dimensionality reduction to 2.}
+                        \label{fig:svd_1}
+                  \end{figure}
+
+                  \autoref{fig:svd_2_3}(a) and (b) present the result of dimensionality reduction to 3 dimensions. This graphic complements the last graphic, in the sense that it is more clear from this plot the fact that the documents can be separable in high dimensional space according to precedent citations.
+
+                  \begin{figure*}[!h]
+                        \centering
+                        \subfloat[\centering ]{{\includegraphics[width=0.4\linewidth]{svd_2.png} }}
+                        \qquad
+                        \subfloat[\centering ]{{\includegraphics[width=0.4\linewidth]{svd_3.png} }}
+                        \caption{Truncated singular value decomposition (SVD) to 3.}
+                        \label{fig:svd_2_3}
+                    \end{figure*}
 
       \nocite{*}
       \bibliographystyle{alpha}
