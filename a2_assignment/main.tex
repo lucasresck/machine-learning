@@ -222,6 +222,14 @@
 
                   Several models need us to choose their hyperparameters, e.g., support vector machine (\autoref{sec:models}). For choosing a hyperparameter of a model, we perform K-fold cross-validation in the training dataset, i.e., for each hyperparameter, training data is split into $K$ sets, and, for each set $k$, the model is fitted in all other sets and validated in set $k$; the performances are aggregated. The hyperparameter with the best performance is the winner.
 
+            \subsection{Performance metrics}
+
+                  Most of our algorithms are supervised and multiclass. The most suitable performance metric is the test accuracy, basically the ratio between hits and tries. We also present some test intraclass metrics, such as class precision (the fraction of BP $k$ predicted documents that are correct, for some BP $k$) and class recall (the fraction of correct BP $k$ documents that were correctly predicted, for some BP $k$). In general, we also present a test confusion matrix, which shows how many test documents were predicted in each class.
+
+            \subsection{Implementation}
+
+                  The models were implemented in Python, using the Scitkit-learn library, with the assistance of Numpy. Text preprocessing was done using the Spacy library, and graphics were plotted using Matplotlib, Seaborn, and Plotly libraries.
+
       \section{Results and discussion}
             \label{sec:results}
 
