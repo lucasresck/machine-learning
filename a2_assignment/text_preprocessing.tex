@@ -1,0 +1,12 @@
+\subsection{Text preprocessing}
+
+    Our texts need to be preprocessed before being converted into TF-IDF vectors. One motivation of this preprocessing is the fact that we are not interested in the weights of the words ``the'', ``to'', and ``that'', for example.
+
+    The preprocessing pipeline adopted in our work considers:
+    \begin{itemize}
+    \item Lowercase: convert the documents into lowercase;
+    \item Tokenize: split the documents into tokens (``words'');
+    \item Lemmatization: convert the token to its ``lemma'', i.e., the dictionary version of this token;
+    \item Remove stopwords: tokens such as ``the'';
+    \item Remove punctuation.
+    \end{itemize}

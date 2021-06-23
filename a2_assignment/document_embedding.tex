@@ -1,0 +1,16 @@
+\subsection{Document embedding}
+    \label{sec:document_embedding}
+
+    \paragraph{TF-IDF.} Before texts can be fed into machine learning models, they need to become numbers, usually vectors. These vectors are called text embeddings, and, in the case of long documents, document embeddings. There are many document embedding techniques available, but, for the scope of this work, we will use here TF-IDF \cite{robertson2004understanding}.
+
+    Briefly, for each document, and for each word, TF-IDF counts the frequency of this word relative to this document (term frequency - TF). This count is ``normalized'' by the rarity of the word in the entire set of documents (inverse document frequency - IDF). Mathematically, for a term $t$ inside document $d$ with frequency $f_{t, d}$,
+    \[\text{tf-idf}(t, d) = \text{tf}(t, d) \times \text{idf}(t),\]
+    \[\text{tf}(t, d) = \frac{f_{t, d}}{\sum_{t' \in d} f_{t', d}}, \ \ \text{idf}(t) = \ln \frac{1+n}{1+\text{df}(t)}+1,\]                  
+    where $n$ is the number of documents and $\text{df}(t)$ is the number of documents that contain $t$. The TF-IDF weights, in the end, construct a vector that represents the document in a very high dimensional space.
+
+    \paragraph{Dimensionality reduction.} Because vectors' dimensionality is too high, we perform a dimensionality reduction to have the vectors treatable by our models. The vectors will be reduced from dimensionality of thousands to dimensionality 50 using truncated singular value decomposition (SVD). It consists of decomposing our matrix $X$ (with rows being the TF-IDF vectors) in
+    \[X = U \Sigma V^\intercal,\]                  
+    where $\Sigma$ is a diagonal matrix of the singular values of $X$. If we take only the $k$ greatest singular values, we will have
+    \[X_{n \times p} = U_{n \times k} \Sigma_{k \times k} \left[V^\intercal\right]_{k \times p},\]                  
+    and our new data points will be $X_{n \times p} V_{p \times k}$, with reduced dimensionality $k$. This is very similar to principal component analysis, and equivalent when data is centered (mean zero in each component).
+
