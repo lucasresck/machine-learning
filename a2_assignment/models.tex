@@ -16,11 +16,11 @@
             \item Given a topic $k$, the words have distribution $w | \beta_k \sim \text{Multinomial}(\beta_k)$.
     \end{itemize}
 
-    The idea of using this model is to verify whether LDA can recover the topic of the BP being cited in a document. For example, if there were only two cited precedents on the dataset, one could fit LDA using two topics and verify if the most important words for each topic are representative of the precedents themselves. Even more, it would be possible to verify if this topic to precedent assignment is good.
+    The idea of using this model is to verify whether LDA can recover the topic of the BP being cited in a document. For example, if there were only two cited precedents on the dataset, one could fit LDA using two topics and verify if the most important words for each topic are representative of the precedents themselves. Even more, it is possible to verify if this topic-to-precedent assignment is good.
 
     \paragraph{Truncated SVD dimensionality reduction.} We will reduce the dimensionality of TF-IDF vectors to visualize if they are of some kind separable. The dimensionality reduction technique will be the (truncated) singular value decomposition, already explained in \autoref{sec:document_embedding}. We will experiment with dimensionalities 2 and 3, which can be visualized on a 2-dimensional screen.
 
-    \paragraph{K-nearest neighbors.} As TF-IDF vectors lie in some vector space, the decision of each BP is being cited could be taken considering the already known precedent cited by its neighbor. This is what the k-nearest neighbors (k-NN) model does. The number of neighbors (parameter $k$) is chosen by cross-validation.
+    \paragraph{K-nearest neighbors.} As TF-IDF vectors lie in some vector space, the decision of which BP is being cited could be taken considering its neighbor's cited precedent. This is what the k-nearest neighbors (k-NN) model does. The number of neighbors (parameter $k$) is chosen by cross-validation.
 
     \paragraph{Linear regression.} This model is already well known, but for regression. For classification, and when the target is binary, it is easy to fit a regression model using $y \in \{-1, 1\}$ and considering the predicted class as the prediction sign. For multiclass, it is fitted one regression per target, and the class with the highest value is chosen. We will also use Ridge regularization, and the hyperparameter is chosen by cross-validation.
 
@@ -28,17 +28,17 @@
 
     \paragraph{Logistic regression.} Logistic regression is like a linear regression for classification, so it is more suitable for our task. For adjusting the model for various classes, we will minimize the multinomial logistic regression loss \cite{bishop2006pattern}:
     \[- \sum_{n=1}^N \sum_{k=1}^K y_{nk} \ln p_{nk},\]                  
-    $y_{nk}$ indicating that the sample $n$ belongs to class $k$, $p_{nk}$ the estimated probability of sample $n$ belonging to class $k$ (calculated with softmax of linear functions of $X_n$). We also experiment with $\ell^2$ regularization, chosen by cross-validation.
+    $y_{nk}$ indicating that the sample $n$ belongs to class $k$, $p_{nk}$ the estimated probability of sample $n$ belonging to class $k$ (calculated with softmax of linear functions of $X_n$). We also experiment with $\ell^2$ regularization, with hyperparameter chosen by cross-validation.
 
-    \paragraph{Linear discriminant analysis.} Linear discriminant analysis fits a probability distribution for each class, considering the priori as the proportion of that class and the distribution of data, given the class, as a multivariate Gaussian. The decision boundary is linear, so we can also assert the \textbf{linear separability} of the documents.
+    \paragraph{Linear discriminant analysis.} Linear discriminant analysis fits a probability distribution for each class, considering the priori as the proportion of that class in the data and the distribution of data, given the class, as a multivariate Gaussian. The decision boundary is linear, so we can also assert the \textbf{linear separability} of the documents using this model.
 
-    \paragraph{Random forest.} From decision tree models, we experiment with random forests. Just like a decision tree, but many of them aggregated, each considering a bootstrap sample of the dataset and also a sample of the predictors. For a regression task, we have learned that, when the decision space is divided into various nodes, the output of the model is the mean of the samples inside that node.
+    \paragraph{Random forest.} From the decision tree-based models, we experiment with random forests. Just like an ordinary decision tree, but many of them aggregated, each considering a bootstrap sample of the dataset and also a sample of the predictors. For a regression task, we have learned that, when the decision space is divided into various nodes, the output of the model is the mean of the samples inside that node.
 
     It is natural to extend regression decision trees to classification decision trees. For example, with the already adjusted model, the predicted class is the class with more samples inside the node, and the probabilities are the class sample proportions.
 
     There are some hyperparameters to be chosen, \eg, depth of the trees and number of trees. These are chosen using cross-validation.
 
-    \paragraph{Support vector machines.} Support vector machines (SVM) are very powerful, even having a simple mathematical formulation. Intuitively, they fit an optimal hyperplane dividing a transformation of the dataset, but also allowing some points to not obey this restriction. The optimization problem is:
+    \paragraph{Support vector machines.} Support vector machines (SVM) are very powerful, even having a simple mathematical formulation. Intuitively, they fit an optimal hyperplane dividing (a transformation of) the dataset, but also allowing some points to not obey this restriction. The optimization problem is:
     \[\begin{aligned}
         \min_{w, b, \zeta} \quad & \frac{1}{2}w^\intercal w + C \sum_{i = 1}^{N}{\zeta_i} \\
         \textrm{s.t.} \quad & y_i (w^\intercal \phi(x_i) + b) \ge 1 - \zeta_i \\

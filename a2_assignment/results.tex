@@ -17,11 +17,11 @@
                 \label{fig:lda_topics}
         \end{figure*}
 
-        We can verify if the ``predicted'' topics match the real BPs being cited. Using this topic to BP assignment presented before, we get an accuracy of 0.76. That is, this topic modeling predicts the cited precedent correctly in 76\% of documents. We would expect 0.2 if it were a random assignment. So, LDA can extract the subjects of the BPs being cited.
+        We can verify if the ``predicted'' topics match the real BPs being cited. Using this topic-to-BP assignment presented before, we get an accuracy of 0.76. That is, this topic modeling predicts the cited precedent correctly in 76\% of documents. We would expect 0.2 if it were a random assignment. So, LDA can extract the subjects of the BPs being cited.
 
     \subsection{Truncated SVD dimensionality reduction}
 
-        \autoref{fig:svd_1} shows the resulting truncated SVD dimensionality reduction to 2. The color indicates the cited precedents, but the algorithm does not know that. We can see a pattern of data distribution, indicating that documents that cite the same BP are near each other.
+        \autoref{fig:svd_1} shows the resulting truncated SVD dimensionality reduction to 2. The color indicates the cited precedents, but the algorithm did not know that. We can see a pattern of data distribution, indicating that documents that cite the same BP are near each other.
 
         \begin{figure}[H]
                 \includegraphics[width=\linewidth]{svd_1.png}
@@ -61,7 +61,8 @@
         \end{table}
 
         \begin{figure}[H]
-                \includegraphics[width=\linewidth]{ridge.png}
+                \centering
+                \includegraphics[width=0.8\linewidth]{ridge.png}
                 \caption{Linear regression test confusion matrix.}
                 \label{fig:rigde}
         \end{figure}
@@ -148,7 +149,7 @@
 
     \subsection{Support vector machine}
 
-        Test metrics relative to the support vector machine used for classification are presented in \autoref{tab:svm}. From the metrics, we see very high performance in test data. The hyperparameters, which include kernel function (linear vs. RBF), regularization parameter $C$, and $\gamma$, were chosen by CV, and the result was $C = 100$, $\gamma = 0.001$, and kernel RBF. The test confusion matrix is excellent, which indicates a very high model performance (\autoref{fig:svm}).
+        Test metrics relative to support vector machine used for classification are presented in \autoref{tab:svm}. From the metrics, we see very high performance in test data. The hyperparameters, which includes kernel function (linear vs. RBF), regularization parameter $C$, and $\gamma$, were chosen by CV, and the result was $C = 100$, $\gamma = 0.001$, and kernel RBF. The test confusion matrix is excellent, which indicates a very high model performance (\autoref{fig:svm}).
         
         % Please add the following required packages to your document preamble:
         % \usepackage{multirow}

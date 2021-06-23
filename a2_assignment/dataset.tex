@@ -38,12 +38,13 @@
             Although our dataset is very simple (few, self-explanatory columns), we can analyze it more deeply to better understand it. Let's start, for example, by checking how many citations each BP has.
 
             \begin{figure}[H]
+                  \centering
                   \includegraphics[width=\linewidth]{bp_citations.png}
                   \caption{Histogram of citations per Binding Precedent.}
                   \label{fig:bp_citations}
             \end{figure}
 
-            From \autoref{fig:bp_citations}, we see that the number of citations per BP is not uniform. BP 10, for example, has the biggest number of citations, followed by 37, 4, and 8. This large difference in the citation number can impact our analysis if we don't work around it.
+            From \autoref{fig:bp_citations}, we see that the number of citations per BP is not uniform. BP 10, for example, has the largest number of citations, followed by 37, 4, and 8. This large difference in the citation number can impact our analysis if we don't work around it.
 
             We already know the documents are long, but one could want to know how long these documents are. If we split each document at whitespaces and newlines and count the number of ``words'', we have a document word count distribution estimate.
 
@@ -55,9 +56,9 @@
 
             There are some special documents (more than 10k words), but their analysis is not our focus. \autoref{fig:word_count} shows that, in general, documents are shorter than 6k words, with a mode around 1k.
 
-            Although document titles are the same, many of them share the same raw text. This ``duplicate'' rate is around 11\%, and can also impact our subsequent analysis. This way, we need to work around these duplicated documents before fitting out models.
+            Although document titles are unique, many documents share the same raw text. This ``duplicate'' rate is around 11\%, and can also impact our subsequent analyses. This way, we need to work around these duplicated documents before fitting our models.
 
-            Finally, one could want to see the distribution of publication date, presented in \autoref{fig:dates}. Date distribution has support between 2003 and 2018 (not clear in the plot), but it concentrates between 2008 and 2018. It is clear that many documents have the publication year 1970, however, this information acts as a missing value. Although this is problematic, that is, many documents do not have a publication date, it will not impact our models, because we only work with raw texts.
+            Finally, one could want to see the distribution of publication date, presented in \autoref{fig:dates}. Date distribution has support between 2003 and 2018 (not clear in the plot), but it is concentrated between 2008 and 2018. It is clear that many documents have the publication year 1970, however, this information acts as a missing value. Although this is problematic, that is, many documents do not have a publication date, it will not impact our models, because we only work with raw texts.
 
             \begin{figure}[H]
                   \includegraphics[width=\linewidth]{dates.png}
