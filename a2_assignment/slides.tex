@@ -32,8 +32,10 @@ Getulio Vargas Foundation}
 
     \begin{frame}
         \frametitle{Introduction}
-        It seems trivial that documents that cite the same precedents have the same subjects. \pause 
-        But can machine learning models extract these patterns?
+        \begin{block}{Motivation}
+            It seems trivial that documents that cite the same precedents have the same subjects. \pause 
+            But can machine learning models extract these patterns?            
+        \end{block}
     \end{frame}
 
     \begin{frame}
@@ -72,7 +74,7 @@ Getulio Vargas Foundation}
 
     \begin{frame}
         \frametitle{Document embedding}
-        Before texts can be fed into machine learning models, they need to become numbers, usually vectors. These vectors are called text embeddings, and, in the case of long documents, document embeddings. \pause
+        Before texts can be fed into machine learning models, they need to become numbers, usually vectors. These vectors are called text embeddings, and, in the case of long texts, document embeddings. \pause
         \begin{itemize}
             \item TF-IDF: it counts the frequency of this word relative to this document (term frequency - TF). This count is ``normalized'' by the rarity of the word in the entire set of documents (inverse document frequency - IDF); \pause
             \item Dimensionality reduction: truncated singular value decomposition.
@@ -96,19 +98,19 @@ Getulio Vargas Foundation}
 
     \begin{frame}
         \frametitle{Sample dataset}
-        Because the original dataset is very unbalanced among the Binding Precedent citations, we need to create a sample dataset that will be used in our analysis. We consider:
+        Because the original dataset is very unbalanced among the Binding Precedent citations, we need to create a sample dataset that will be used in our analysis. We consider: \pause
         \begin{itemize}
-            \item each document cites only one BP, to avoid confusion;
-            \item documents that share the same raw texts are removed, to avoid overfitting;
-            \item we only work with the five most cited BPs, for simplicity and also data limitation;
-            \item the dataset is balanced among the classes, i.e., each class has the same number of documents.
+            \item each document cites only one BP, to avoid confusion;\pause
+            \item documents that share the same raw texts are removed, to avoid overfitting;\pause
+            \item we only work with the five most cited BPs, for simplicity and also data limitation;\pause
+            \item the dataset is balanced among the classes, \ie, each class has the same number of documents.\pause
         \end{itemize}
         In the end, we work with 1401 documents of BPs 10, 37, 4, 20, and 14, totalizing 7005 documents.
     \end{frame}
 
     \begin{frame}
         \frametitle{Latent Dirichlet allocation}
-        Choosing five topics, we have:
+        Choosing five topics, we have: \pause
         \begin{figure}
             \centering
             \includegraphics[width=\linewidth]{lda_topics.png}
