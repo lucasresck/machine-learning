@@ -15,6 +15,7 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{subfig}
+\usepackage{multirow}
 
 % Portuguese text
 \usepackage[utf8]{inputenc}
@@ -24,7 +25,7 @@
 \usepackage{fullpage}  % Full page
 \usepackage{booktabs}  % Pandas output
 \usepackage{microtype}  % Solve overfull
-% \usepackage{float}
+\usepackage{float}
 
 \graphicspath{ {../images/} }
 
@@ -99,7 +100,7 @@
 
                   Although our dataset is very simple (few, self-explanatory columns), we can analyze it more deeply to better understand it. Let's start, for example, by checking how many citations each BP has.
 
-                  \begin{figure}[!h]
+                  \begin{figure}[H]
                         \includegraphics[width=\linewidth]{bp_citations.png}
                         \caption{Histogram of citations per Binding Precedent.}
                         \label{fig:bp_citations}
@@ -109,7 +110,7 @@
 
                   We already know the documents are long, but one could want to know how long these documents are. If we split each document at whitespaces and newlines and count the number of ``words'', we have a document word count distribution estimate.
 
-                  \begin{figure}[!h]
+                  \begin{figure}[H]
                         \includegraphics[width=\linewidth]{word_count.png}
                         \caption{Estimate of document word count distribution.}
                         \label{fig:word_count}
@@ -121,7 +122,7 @@
 
                   Finally, one could want to see the distribution of publication date, presented in \autoref{fig:dates}. Date distribution has support between 2003 and 2018 (not clear in the plot), but it concentrates between 2008 and 2018. It is clear that many documents have the publication year 1970, however, this information acts as a missing value. Although this is problematic, that is, many documents do not have a publication date, it will not impact our models, because we only work with raw texts.
 
-                  \begin{figure}[!h]
+                  \begin{figure}[H]
                         \includegraphics[width=\linewidth]{dates.png}
                         \caption{Distribution of document publication date.}
                         \label{fig:dates}
@@ -185,7 +186,7 @@
 
                   \paragraph{Linear regression.} This model is already well known, but for regression. For classification, and when the target is binary, it is easy to fit a regression model using $y \in \{-1, 1\}$ and considering the predicted class as the prediction sign. For multiclass, it is fitted one regression per target, and the class with the highest value is chosen. We will also use Ridge regularization, and the hyperparameter is chosen by cross-validation.
 
-                  Although using linear regression for classification is not that convenient, mainly because the output can't be interpreted as a probability, we can use this model to assert if our vectors are \textbf{linear separable} in the very high dimensional space.
+                  Although using linear regression for classification is not that convenient, mainly because the output can't be interpreted as a probability, we can use this model to assert if our vectors are \textbf{linearly separable} in the very high dimensional space.
 
                   \paragraph{Logistic regression.} Logistic regression is like a linear regression for classification, so it is more suitable for our task. For adjusting the model for various classes, we will minimize the multinomial logistic regression loss \cite{bishop2006pattern}:
                   \[- \sum_{n=1}^N \sum_{k=1}^K y_{nk} \ln p_{nk},\]                  
@@ -254,9 +255,9 @@
 
             \subsection{Truncated SVD dimensionality reduction}
 
-                  \autoref{fig:svd_1} shows the resulting truncated SVD dimensionality reduction to 2. The color indicates the cited precedents, but the algorithm does not know that. We can see a pattern of data distribution, indicating that, in fact, documents that cite the same BP are near each other.
+                  \autoref{fig:svd_1} shows the resulting truncated SVD dimensionality reduction to 2. The color indicates the cited precedents, but the algorithm does not know that. We can see a pattern of data distribution, indicating that documents that cite the same BP are near each other.
 
-                  \begin{figure}[!h]
+                  \begin{figure}[H]
                         \includegraphics[width=\linewidth]{svd_1.png}
                         \caption{Truncated singular value decomposition (SVD) dimensionality reduction to 2.}
                         \label{fig:svd_1}
@@ -269,11 +270,174 @@
                         \subfloat[\centering ]{{\includegraphics[width=0.4\linewidth]{svd_2.png} }}
                         \qquad
                         \subfloat[\centering ]{{\includegraphics[width=0.4\linewidth]{svd_3.png} }}
-                        \caption{Truncated singular value decomposition (SVD) to 3.}
+                        \caption{Truncated singular value decomposition (SVD) dimensionality reduction to 3.}
                         \label{fig:svd_2_3}
-                    \end{figure*}
+                  \end{figure*}
 
-      \nocite{*}
+            \subsection{Linear regression}
+
+                  The results of classification using linear regression are presented in \autoref{tab:ridge}. Cross-validation to choose the Ridge regularization parameter was performed. All test metrics, i.e., precision, recall, and accuracy, are very high, which indicates the data is \textbf{linear separable}. \autoref{fig:rigde} shows the test confusion matrix, presenting how many documents from each BP were predicted as each BP. It is almost a diagonal matrix, indicating a very well-adjusted model.
+
+                  % Please add the following required packages to your document preamble:
+                  % \usepackage{multirow}
+                  \begin{table}[H]
+                        \centering
+                        \caption{Linear regression test metrics.}
+                        \label{tab:ridge}
+                        \begin{tabular}{c|cc|c}
+                        BP & Precision & Recall & Accuracy              \\ \hline
+                        4  & 0.96      & 0.91   & \multirow{5}{*}{0.95} \\
+                        10 & 0.94      & 0.93   &                       \\
+                        14 & 0.94      & 0.99   &                       \\
+                        20 & 0.99      & 0.95   &                       \\
+                        37 & 0.90      & 0.95   &                      
+                        \end{tabular}
+                  \end{table}
+
+                  \begin{figure}[H]
+                        \includegraphics[width=\linewidth]{ridge.png}
+                        \caption{Linear regression test confusion matrix.}
+                        \label{fig:rigde}
+                  \end{figure}
+
+            \subsection{Logistic regression}
+
+                  \autoref{tab:lr} presents the results of classification using logistic regression. Cross-validation to choose $C$ regularization parameter was performed. All test metrics, i.e., precision, recall, and accuracy, are very high. Comparing to linear regression, the accuracy is even higher. \autoref{fig:lr} shows the test confusion matrix. It is also almost a diagonal matrix, indicating a very well-adjusted model.
+
+                  % Please add the following required packages to your document preamble:
+                  % \usepackage{multirow}
+                  \begin{table}[H]
+                        \centering
+                        \caption{Logistic regression test metrics.}
+                        \label{tab:lr}
+                        \begin{tabular}{c|cc|c}
+                        BP & Precision & Recall & Accuracy              \\ \hline
+                        4  & 0.98      & 0.97   & \multirow{5}{*}{0.97} \\
+                        10 & 0.96      & 0.96   &                       \\
+                        14 & 0.98      & 0.99   &                       \\
+                        20 & 0.97      & 0.97   &                       \\
+                        37 & 0.95      & 0.96   &                      
+                        \end{tabular}
+                  \end{table}
+
+                  \begin{figure}[H]
+                        \includegraphics[width=\linewidth]{lr.png}
+                        \caption{Logistic regression test confusion matrix.}
+                        \label{fig:lr}
+                  \end{figure}
+
+            \subsection{Linear discriminant analysis}
+
+                  The results of classification using linear discriminant analysis are presented in \autoref{tab:lda}. All test metrics, i.e., precision, recall, and accuracy, are very high, which indicates the data is \textbf{linearly separable}. \autoref{fig:lda} shows the test confusion matrix, almost a diagonal matrix.
+
+                  % Please add the following required packages to your document preamble:
+                  % \usepackage{multirow}
+                  \begin{table}[H]
+                        \centering
+                        \caption{Linear discriminant analysis test metrics.}
+                        \label{tab:lda}
+                        \begin{tabular}{c|cc|c}
+                        BP & Precision & Recall & Accuracy              \\ \hline
+                        4  & 0.97      & 0.91   & \multirow{5}{*}{0.95} \\
+                        10 & 0.91      & 0.95   &                       \\
+                        14 & 0.97      & 0.99   &                       \\
+                        20 & 0.99      & 0.93   &                       \\
+                        37 & 0.90      & 0.96   &                      
+                        \end{tabular}
+                  \end{table}
+
+                  \begin{figure}[H]
+                        \includegraphics[width=\linewidth]{lda.png}
+                        \caption{Linear discriminant analysis test confusion matrix.}
+                        \label{fig:lda}
+                  \end{figure}
+
+            \subsection{K-nearest neighbors}
+
+                  \autoref{tab:k_nn} presents the results of using k-nearest neighbors for classification. For choosing the number $k$ of neighbors, it was performed cross-validation, and the chosen hyperparameter was $k = 1$. Test metrics, i.e., precision, recall, and accuracy, are high. \autoref{fig:k_nn} shows the test confusion matrix, which indicates high performance.
+                  
+                  % Please add the following required packages to your document preamble:
+                  % \usepackage{multirow}
+                  \begin{table}[H]
+                        \centering
+                        \caption{K-nearest neighbors test metrics.}
+                        \label{tab:k_nn}
+                        \begin{tabular}{c|cc|c}
+                        BP & Precision & Recall & Accuracy              \\ \hline
+                        4  & 0.93      & 0.95   & \multirow{5}{*}{0.93} \\
+                        10 & 0.87      & 0.90   &                       \\
+                        14 & 0.95      & 0.96   &                       \\
+                        20 & 0.97      & 0.95   &                       \\
+                        37 & 0.92      & 0.90   &                      
+                        \end{tabular}
+                  \end{table}
+
+                  \begin{figure}[H]
+                        \includegraphics[width=\linewidth]{k_nn.png}
+                        \caption{K-nearest neighbors test confusion matrix.}
+                        \label{fig:k_nn}
+                  \end{figure}
+
+            \subsection{Random forest}
+
+                  The results of using a random forest for classification are shown in \autoref{tab:rf}. Hyperparameters of maximum tree depth and the number of estimators were chosen using cross-validation, resulting in no maximum depth and number of trees equal to 100. From test metrics, we see a very high performance. The test confusion matrix is also excellent, almost a diagonal matrix (\autoref{fig:rf}).
+                  
+                  % Please add the following required packages to your document preamble:
+                  % \usepackage{multirow}
+                  \begin{table}[H]
+                        \centering
+                        \caption{Random forest test metrics.}
+                        \label{tab:rf}
+                        \begin{tabular}{c|cc|c}
+                        BP & Precision & Recall & Accuracy              \\ \hline
+                        4  & 0.98      & 0.96   & \multirow{5}{*}{0.96} \\
+                        10 & 0.91      & 0.95   &                       \\
+                        14 & 0.98      & 0.99   &                       \\
+                        20 & 0.98      & 0.96   &                       \\
+                        37 & 0.94      & 0.93   &                      
+                        \end{tabular}
+                  \end{table}
+
+                  \begin{figure}[H]
+                        \includegraphics[width=\linewidth]{rf.png}
+                        \caption{Random forest test confusion matrix.}
+                        \label{fig:rf}
+                  \end{figure}
+
+            \subsection{Support vector machine}
+
+                  Test metrics relative to the support vector machine used for classification are presented in \autoref{tab:svm}. From the metrics, we see very high performance in test data. The hyperparameters, which include kernel function (linear vs. RBF), regularization parameter $C$, and $\gamma$, were chosen by CV, and the result was $C = 100$, $\gamma = 0.001$, and kernel RBF. The test confusion matrix is excellent, which indicates a very high model performance (\autoref{fig:svm}).
+                  
+                  % Please add the following required packages to your document preamble:
+                  % \usepackage{multirow}
+                  \begin{table}[H]
+                        \centering
+                        \caption{Support vector machine test metrics.}
+                        \label{tab:svm}
+                        \begin{tabular}{c|cc|c}
+                        BP & Precision & Recall & Accuracy              \\ \hline
+                        4  & 0.99      & 0.97   & \multirow{5}{*}{0.97} \\
+                        10 & 0.95      & 0.97   &                       \\
+                        14 & 0.98      & 0.99   &                       \\
+                        20 & 0.98      & 0.97   &                       \\
+                        37 & 0.96      & 0.96   &                      
+                        \end{tabular}
+                  \end{table}
+
+                  \begin{figure}[H]
+                        \includegraphics[width=\linewidth]{svm.png}
+                        \caption{Support vector machine test confusion matrix.}
+                        \label{fig:svm}
+                  \end{figure}
+
+            \subsection{Further discussion}
+
+                  It is clear from the experiments that our dataset is separable, in the sense of being able to be separated according to Binding Precedent citation. Even more, the data seems to be \textbf{linearly separable}, as indicated by linear regression, logistic regression, and linear discriminant analysis. One very interesting property is that the documents, in very high dimensional space, are closer if they cite the same precedent, which is indicated by the results of truncated SVD dimensionality reduction and k-NN.
+
+                  Using latent Dirichlet allocation, and analyzing the results, we could verify that the topics, in general, extracted words and the subject, in general, of the cited precedents. We saw that, with five BPs and five topics, each topic could be associated with a BP, and the accuracy of this association was surprisingly high, over 0.75, against 0.2, the accuracy of a random assignment.
+
+                  With these models in hand, one could expand these experiments, considering more documents, more precedents, more sophisticated models, and build a model that confidently predicts the precedent being cited.
+
       \bibliographystyle{alpha}
       \bibliography{sample}
 \end{document}
