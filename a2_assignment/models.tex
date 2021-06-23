@@ -3,7 +3,7 @@
 
     The main goal of this work is to assert whether traditional machine learning models can ``separate'' documents according to BP citations. We will explore two approaches: unsupervised and supervised learning, with a focus on the latter.
 
-    Unsupervised learning means extracting patterns from data that is not labeled, e.g., our raw documents. Considering this, we will present the raw documents to some algorithms, without explaining which precedents are being cited, and we will check their outputs to see if there is some pattern.
+    Unsupervised learning means extracting patterns from data that is not labeled, \eg, our raw documents. Considering this, we will present the raw documents to some algorithms, without explaining which precedents are being cited, and we will check their outputs to see if there is some pattern.
 
     We have vectors representing our texts as $X$ and cited BPs as $y$, the definition of supervised learning. With this in mind, we will also adjust several supervised models in this data.
 
@@ -36,7 +36,7 @@
 
     It is natural to extend regression decision trees to classification decision trees. For example, with the already adjusted model, the predicted class is the class with more samples inside the node, and the probabilities are the class sample proportions.
 
-    There are some hyperparameters to be chosen, e.g., depth of the trees and number of trees. These are chosen using cross-validation.
+    There are some hyperparameters to be chosen, \eg, depth of the trees and number of trees. These are chosen using cross-validation.
 
     \paragraph{Support vector machines.} Support vector machines (SVM) are very powerful, even having a simple mathematical formulation. Intuitively, they fit an optimal hyperplane dividing a transformation of the dataset, but also allowing some points to not obey this restriction. The optimization problem is:
     \[\begin{aligned}
